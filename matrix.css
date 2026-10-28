@@ -5,8 +5,8 @@
 .process .step:nth-child(-n+3){border-bottom:0}
 .claim-toolbar{flex-wrap:wrap}
 .result-count{font-size:.72rem;color:#637477;white-space:nowrap}
-.evidence-table-head,.evidence-summary{display:grid;grid-template-columns:1.15fr 1.18fr 1.18fr 1.12fr 1.2fr}
-.evidence-table-head{background:var(--ink);color:#f7f2e6;font-size:.7rem;font-weight:800;letter-spacing:.06em}
+.evidence-table-head,.evidence-summary{display:grid;grid-template-columns:1fr 1.55fr .9fr 1.25fr 1.55fr}
+.evidence-table-head{background:var(--ink);color:#f7f2e6;font-size:.67rem;font-weight:800;letter-spacing:.04em}
 .evidence-table-head span{padding:.75rem .85rem;border-right:1px solid rgba(255,255,255,.15)}
 .evidence-table-head span:last-child{border-right:0}
 .claim-list{gap:0;border-left:1px solid var(--line);border-right:1px solid var(--line)}
@@ -22,9 +22,12 @@
 .question-cell{border-left:3px solid var(--accent);padding-left:1rem}
 .evidence-row[data-priority="p1"] .question-cell{border-left-color:#718d7e}
 .question-cell strong{display:block;font-family:"Songti SC","Noto Serif CJK SC",Georgia,serif;font-size:1.04rem;line-height:1.45;color:var(--ink);margin:.5rem 0 .3rem}
-.question-cell em{display:block;font-style:normal;font-size:.69rem;color:#758385}
-.boundary-cell{color:#99513f}
-.decision-cell{position:relative;padding-right:1.5rem;color:#315e52;font-weight:650}
+.record-elements{display:block;margin-top:.65rem;padding-top:.55rem;border-top:1px solid var(--line);color:#677576;font-size:.73rem}
+.record-elements b{color:#3e675d}
+.concept-cell{font-weight:750;color:#687358}
+.decision-cell{position:relative;padding-right:1.5rem;color:#315e52}
+.decision-cell strong{font-weight:800}
+.decision-boundary{display:block;margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--line);color:#97513f;font-size:.74rem}
 .row-expand{position:absolute;right:.4rem;bottom:.65rem;font-size:1.2rem;line-height:1;color:var(--accent);font-weight:400;transition:transform .2s}
 .evidence-row[open] .row-expand{transform:rotate(45deg)}
 .evidence-detail{border-top:2px solid #bfd2c9;padding:1.5rem;background:#f8f6f0}
@@ -71,7 +74,7 @@
   .evidence-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
   .table-cell{border-bottom:1px solid var(--line)}
   .table-cell small:not(.priority){display:block;color:#718078;font-size:.64rem;font-weight:800;margin-bottom:.25rem}
-  .question-cell,.decision-cell{grid-column:1/-1}
+  .question-cell,.collection-cell,.decision-cell{grid-column:1/-1}
   .question-cell{border-right:0}
   .decision-cell{border-bottom:0}
   .decision-board{grid-template-columns:1fr}
