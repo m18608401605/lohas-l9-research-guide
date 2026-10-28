@@ -1,4 +1,5 @@
 const guide = window.L9_GUIDE;
+const roundOne = window.L9_FIRST_ROUND;
 const sourceMap = new Map(guide.sources.map(source => [source.id, source]));
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const linkSource = id => {
@@ -6,23 +7,26 @@ const linkSource = id => {
   return source ? `<a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)} <span aria-hidden="true">↗</span></a>` : '';
 };
 
-document.getElementById('claim-list').innerHTML = guide.claims.map(claim => `
-  <details class="claim-card" data-priority="${escapeHTML(claim.priority)}" data-search="${escapeHTML([claim.title, claim.question, claim.category, claim.key, ...claim.queries].join(' ').toLowerCase())}">
-    <summary>
-      <span class="claim-heading"><span class="priority ${escapeHTML(claim.priority)}">${claim.priority === 'p0' ? '先做 P0' : '随后 P1'}</span><span class="category">${escapeHTML(claim.category)}</span><strong>${escapeHTML(claim.title)}</strong><span class="claim-question">${escapeHTML(claim.question)}</span></span>
-      <span class="expand-icon" aria-hidden="true">＋</span>
+document.getElementById('claim-list').innerHTML = roundOne.map((item, index) => `
+  <details class="evidence-row" data-priority="${escapeHTML(item.priority)}" data-search="${escapeHTML([item.title, item.concept, item.first, item.can, item.decision, ...item.queries].join(' ').toLowerCase())}">
+    <summary class="evidence-summary">
+      <span class="table-cell question-cell"><small class="priority ${escapeHTML(item.priority)}">${item.priority === 'p0' ? '先做 P0' : '随后 P1'}</small><strong>${String(index + 1).padStart(2, '0')} · ${escapeHTML(item.title)}</strong><em>${escapeHTML(item.concept)}</em></span>
+      <span class="table-cell"><small>第一轮具体找</small>${escapeHTML(item.first)}</span>
+      <span class="table-cell"><small>能支持</small>${escapeHTML(item.can)}</span>
+      <span class="table-cell boundary-cell"><small>不能证明</small>${escapeHTML(item.cannot)}</span>
+      <span class="table-cell decision-cell"><small>影响的决策</small>${escapeHTML(item.decision)}<b class="row-expand" aria-hidden="true">＋</b></span>
     </summary>
-    <div class="claim-body">
-      <div class="claim-purpose"><span>为什么查</span><p>${escapeHTML(claim.why)}</p></div>
-      <div class="evidence-grid">
-        <div class="evidence-block essential"><span class="evidence-label">01 / 关键证据 · 优先找</span><p>${escapeHTML(claim.key)}</p></div>
-        <div class="evidence-block"><span class="evidence-label">02 / 一般证据 · 补解释</span><p>${escapeHTML(claim.general)}</p></div>
-        <div class="evidence-block trigger"><span class="evidence-label">03 / 什么时候启动替代</span><p>${escapeHTML(claim.trigger)}</p></div>
-        <div class="evidence-block fallback"><span class="evidence-label">04 / 替代资料 · 按顺序</span><ol>${claim.fallback.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ol></div>
+    <div class="evidence-detail">
+      <div class="detail-lead"><span class="card-kicker">展开后按此执行</span><h3>${escapeHTML(item.title)}</h3><p><strong>需要记录的具体要素：</strong>${escapeHTML(item.elements)}</p></div>
+      <div class="detail-grid">
+        <div class="detail-block key"><span>01 / 最关键的证据</span><p>${escapeHTML(item.key)}</p></div>
+        <div class="detail-block"><span>02 / 一般支撑证据</span><p>${escapeHTML(item.general)}</p></div>
+        <div class="detail-block trigger"><span>03 / 何时才用替代证据</span><p>${escapeHTML(item.trigger)}</p></div>
+        <div class="detail-block fallback"><span>04 / 替代证据顺序</span><ol>${item.fallback.map(value => `<li>${escapeHTML(value)}</li>`).join('')}</ol></div>
       </div>
-      <div class="inference-grid"><div class="can"><span>可以得出的判断</span><p>${escapeHTML(claim.can)}</p></div><div class="cannot"><span>不能直接推断</span><p>${escapeHTML(claim.cannot)}</p></div><div class="counter"><span>要主动检查的反方解释</span><p>${escapeHTML(claim.counter)}</p></div></div>
-      <div class="research-actions"><div><span class="small-label">从这里开始查</span><div class="source-links">${claim.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">可复制检索词</span><div class="query-list">${claim.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>
-      <div class="claim-bottom"><p><strong>提交成果：</strong>${escapeHTML(claim.deliverable)}</p><p><strong>目前进度：</strong>${escapeHTML(claim.status)}</p></div>
+      <div class="detail-counter"><strong>主动寻找相反解释</strong><p>${escapeHTML(item.counter)}</p></div>
+      <div class="research-actions"><div><span class="small-label">可回查的资料入口</span><div class="source-links">${item.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">点击复制检索词</span><div class="query-list">${item.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>
+      <p class="detail-deliverable"><strong>本项交付：</strong>${escapeHTML(item.deliverable)}</p>
     </div>
   </details>
 `).join('');
@@ -33,28 +37,34 @@ document.getElementById('source-list').innerHTML = guide.sources.map(source => `
 
 const search = document.getElementById('claim-search');
 const filters = [...document.querySelectorAll('.filter')];
-const cards = [...document.querySelectorAll('.claim-card')];
+const rows = [...document.querySelectorAll('.evidence-row')];
 let activeFilter = 'all';
 function applyFilter() {
   const term = search.value.trim().toLowerCase();
   let visible = 0;
-  for (const card of cards) {
-    const matches = (activeFilter === 'all' || card.dataset.priority === activeFilter) && (!term || card.dataset.search.includes(term));
-    card.hidden = !matches;
+  for (const row of rows) {
+    const matches = (activeFilter === 'all' || row.dataset.priority === activeFilter) && (!term || row.dataset.search.includes(term));
+    row.hidden = !matches;
     if (matches) visible++;
   }
   document.getElementById('no-results').hidden = visible !== 0;
+  document.getElementById('result-count').textContent = `显示 ${visible} / ${rows.length} 项`;
 }
 search.addEventListener('input', applyFilter);
 for (const filter of filters) filter.addEventListener('click', () => {
   activeFilter = filter.dataset.filter;
-  for (const item of filters) { const selected = item === filter; item.classList.toggle('active', selected); item.setAttribute('aria-pressed', String(selected)); }
+  for (const item of filters) {
+    const selected = item === filter;
+    item.classList.toggle('active', selected);
+    item.setAttribute('aria-pressed', String(selected));
+  }
   applyFilter();
 });
+applyFilter();
 
-async function copyText(text, button) {
+async function copyText(value, button) {
   try {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(value);
     const previous = button.innerHTML;
     button.innerHTML = '已复制 ✓';
     window.setTimeout(() => { button.innerHTML = previous; }, 1600);
@@ -67,8 +77,8 @@ document.addEventListener('click', event => {
   if (button) copyText(button.dataset.copy, button);
 });
 document.getElementById('copy-template').addEventListener('click', event => {
-  copyText('我们的暂定判断是【　】；决定性证据是【来源及口径】；最强反对理由是【　】；关键缺口是【　】；如果【新证据】出现，我们将把判断改为【　】。建议先做【动作】，用【指标】复核。', event.currentTarget);
+  copyText('机会：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n相对价值：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n营销匹配：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n暂定判断【　】；首要行动【　】；前提与风险【　】；复核指标【　】。', event.currentTarget);
 });
 document.getElementById('copy-record').addEventListener('click', event => {
-  copyText('对应论点｜原始链接｜发布者与发布日期｜统计期间｜地域与型号／人群｜指标口径｜原文位置｜它支持什么／不能支持什么｜反证或疑点', event.currentTarget);
+  copyText('任务编号｜原始链接｜发布者与发布日期｜统计期间｜地域与型号／人群｜指标定义｜原文位置｜资料事实｜能支持什么｜不能证明什么｜相反解释｜影响哪项决策', event.currentTarget);
 });
