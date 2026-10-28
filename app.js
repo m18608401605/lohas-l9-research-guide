@@ -4,7 +4,7 @@ const sourceMap = new Map(guide.sources.map(source => [source.id, source]));
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const linkSource = id => {
   const source = sourceMap.get(id);
-  return source ? `<a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)} <span aria-hidden="true">↗</span></a>` : '';
+  return source ? `<div class="task-source"><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)} <span aria-hidden="true">↗</span></a><small><strong>使用边界：</strong>${escapeHTML(source.limit)}</small></div>` : '';
 };
 
 document.getElementById('claim-list').innerHTML = roundOne.map((item, index) => `
