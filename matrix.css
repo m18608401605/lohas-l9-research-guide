@@ -1,4 +1,9 @@
 /* 第一轮证据矩阵：先看推论与决策，再按需展开研究细节。 */
+.first-time-guide{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-top:1.4rem;padding:.85rem 1rem;border-left:2px solid #e6c383;background:rgba(255,255,255,.07);font-size:.76rem;color:#cfddda}
+.first-time-guide strong{color:#e6c383;margin-right:.3rem}
+.first-time-guide a{color:#f1e8cf;text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.first-time-guide a:hover{color:#fff}
+.mobile-hint{display:none}
 .process .steps{grid-template-columns:repeat(3,1fr)}
 .process .step{min-height:185px}
 .process .step:nth-child(3){border-right:0}
@@ -49,6 +54,11 @@
 .detail-counter strong{font-size:.76rem;color:#87663e}
 .detail-counter p{font-size:.79rem;margin:.2rem 0 0}
 .evidence-detail .research-actions{padding:1.1rem 0}
+.research-actions .source-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));align-items:stretch}
+.task-source{padding:.7rem;background:#edf2ec;border:1px solid #d8e4da}
+.source-links .task-source a{display:inline;padding:0;background:none;font-size:.74rem;color:#315e52}
+.task-source small{display:block;margin-top:.4rem;font-size:.69rem;line-height:1.55;color:#68726f}
+.task-source small strong{color:#9a563c}
 .detail-deliverable{font-size:.8rem!important;margin:1rem 0 0!important}
 .matrix-note{margin-top:1rem;font-size:.77rem!important;color:#71807d!important}
 .source-drawer{max-width:1322px;margin:0 auto 1rem;background:#f8f8f2;border:1px solid #cfd9d2}
@@ -68,6 +78,8 @@
 .decision-rule strong{font-size:.79rem;color:#7e5b32}
 .decision-rule p{font-size:.8rem;margin:.4rem 0 0}
 .decision-rule b{color:var(--ink)}
+.collab-note{margin:1rem 0 0!important;padding:1rem 1.2rem;background:#f6f0e3;border-left:3px solid #bda06a;font-size:.8rem!important}
+.collab-note strong{color:var(--ink)}
 
 @media(max-width:1100px){
   .evidence-table-head{display:none}
@@ -80,6 +92,8 @@
   .decision-board{grid-template-columns:1fr}
 }
 @media(max-width:760px){
+  .first-time-guide{font-size:.73rem;gap:.35rem .5rem}
+  .mobile-hint{display:block;font-size:.76rem!important;color:#667276!important;margin:-.2rem 0 .8rem}
   .process .steps{grid-template-columns:1fr}
   .process .step,.process .step:nth-child(3){padding:1rem 0;border-right:0;border-bottom:1px solid rgba(23,45,51,.18)}
   .process .step:last-child{border-bottom:0}
@@ -87,6 +101,8 @@
   .table-cell,.question-cell,.decision-cell{grid-column:1;border-right:0;padding:.75rem 1rem}
   .question-cell{padding-top:1rem}
   .decision-cell{padding-bottom:1.1rem}
+  .collection-cell .record-elements{display:none}
+  .evidence-row[open] .collection-cell .record-elements{display:block}
   .evidence-detail{padding:1rem}
   .source-drawer summary{flex-wrap:wrap}
   .source-drawer summary span{width:100%}
