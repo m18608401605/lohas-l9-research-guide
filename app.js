@@ -67,13 +67,13 @@ if (detail) {
     detail.innerHTML = `
       <div class="task-detail-header"><span class="priority ${escapeHTML(item.priority)}">${item.priority === 'p0' ? '优先关注' : '按需补看'}</span><span class="task-number">问题 ${String(index + 1).padStart(2, '0')} / ${roundOne.length}</span><h1>${escapeHTML(item.title)}</h1><p>对应知识点：${escapeHTML(item.concept)}</p></div>
       <div class="task-why"><strong>为什么看这个问题</strong><p>${escapeHTML(item.why)}</p></div>
-      <div class="task-detail-body"><div class="detail-lead"><span class="card-kicker">01 / 查找资料</span><h2>先找能直接检验问题的证据</h2><p>一般资料用来解释与核对；关键证据不足时再查看替代路径。</p></div>
+      <div class="task-detail-body"><div class="detail-lead"><span class="card-kicker">01 / 查找资料</span><h2>先找能直接检验问题的证据</h2><p>先看资料覆盖的产品或人群、地域、时期和指标；缺少直接证据时，只补查相应缺口。</p></div>
         <div class="detail-grid">
           <div class="detail-block key"><span>优先找什么</span><p>${escapeHTML(item.first)}</p><p class="detail-secondary"><strong>关键证据：</strong>${escapeHTML(item.key)}</p><small><strong>核对口径：</strong>${escapeHTML(item.elements)}</small></div>
-          <div class="detail-block"><span>一般资料有什么作用</span><p>${escapeHTML(item.general)}</p></div>
+          <div class="detail-block"><span>其他资料的用途</span><p>${escapeHTML(item.general)}</p></div>
         </div>
         <div class="research-actions"><div><span class="small-label">从这些来源开始</span><div class="source-links">${item.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">点击复制检索词</span><div class="query-list">${item.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>
-        <details class="task-fallback"><summary>关键证据不足时，再看替代资料 <span aria-hidden="true">＋</span></summary><div><p><strong>什么时候需要：</strong>${escapeHTML(item.trigger)}</p><ol>${item.fallback.map(value => `<li>${escapeHTML(value)}</li>`).join('')}</ol><p>使用替代资料时，结论须限制在它实际覆盖的型号、人群、地域和指标范围内。</p></div></details>
+        <details class="task-fallback"><summary>缺少直接证据时，怎样继续查？ <span aria-hidden="true">＋</span></summary><div><p><strong>出现什么缺口时：</strong>${escapeHTML(item.trigger)}</p><ol>${item.fallback.map(value => `<li>${escapeHTML(value)}</li>`).join('')}</ol><p>补查线索只能支持它实际覆盖的型号、人群、地域、时期和指标；仍缺失的内容要明确写为待核。</p></div></details>
         <div class="task-interpretation"><div class="detail-lead"><span class="card-kicker">02 / 解释资料</span><h2>把资料连到知识点和决策</h2></div><div class="concept-bridge"><strong>知识点怎样用</strong><p>${escapeHTML(item.conceptUse)}</p></div><div class="meaning-grid"><article><strong>这些资料可以支持</strong><p>${escapeHTML(item.can)}</p></article><article><strong>不能据此推断</strong><p>${escapeHTML(item.cannot)}</p></article></div><div class="detail-counter"><strong>还要考虑的解释</strong><p>${escapeHTML(item.counter)}</p></div><div class="decision-clue"><strong>可能影响的决策</strong><p>${escapeHTML(item.decision)}</p></div></div>
         <div class="discussion-prompt"><span class="card-kicker">交给小组讨论</span><p>${escapeHTML(item.discussion)}</p></div>
       </div>`;
