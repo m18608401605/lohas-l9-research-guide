@@ -1,6 +1,6 @@
 window.L9_GUIDE = {
   sources: [
-    {id:'brand', kind:'企业自述', title:'乐活元官网（品牌资料入口）', url:'https://lehuoyuan.com/', meta:'作业说明列 lehuoyuan.com/index 为起点 · 首页 2026-10-29 查阅 · 品牌层面', summary:'查看品牌如何介绍健康监测、AI 平台及医师指导服务；这个入口不是已核实的 L9 型号专页。', limit:'可证明品牌如何自述；未核实到完整 L9 型号条款，不能把品牌通用描述直接当作 L9 功能或效果。'},
+    {id:'brand', kind:'企业自述', title:'乐活元官网（品牌资料入口）', url:'https://lehuoyuan.com/', meta:'作业说明列 lehuoyuan.com/index 为起点 · 品牌首页 2026-10-28 查阅 · 网页无发布日期', summary:'查看品牌如何介绍健康监测、AI 平台及医师指导服务；这个入口不是已核实的 L9 型号专页。', limit:'可证明品牌如何自述；未核实到完整 L9 型号条款，不能把品牌通用描述直接当作 L9 功能或效果。'},
     {id:'jdL9', kind:'平台线索', title:'京东：乐活元 L9 同名商品列表', url:'https://www.jd.com/jiage/6196d5b3008006dcea28.html?electedExtAttrSet=14567%2C&extAttrValue=expand_name%2C%40178645%3A%3A14567&sort_type=sort_default', meta:'动态列表 · 2026-10-29 检索到 L9 同名商品 · 商品实页待逐一核验', summary:'从列表打开具体商品页，核对型号版本、店铺身份、页面报价、购买与售后条款。', limit:'列表和卖家表述不等于企业官方营销；评论数、排序及标价不能当作销量或成交价。'},
     {id:'appStore', kind:'企业应用展示', title:'中国区 App Store：乐活元 App', url:'https://apps.apple.com/cn/app/%E4%B9%90%E6%B4%BB%E5%85%83/id6464010298', meta:'动态应用页 · 2026-10-29 查阅 · 开发者显示为上海乐活元医学科技有限公司', summary:'查看应用公开介绍、版本记录与支持入口，补查品牌展示的使用路径。', limit:'应用页面并非 L9 型号说明书；评分和少量评论不能代表使用率、留存或顾客满意度。'},
     {id:'huawei', kind:'竞品官方', title:'HUAWEI WATCH D2 产品页', url:'https://consumer.huawei.com/cn/wearables/watch-d2/', meta:'动态网页 · 2026-10-29 查阅 · 中国市场', summary:'可记录竞品所展示的功能、页面报价、服务与注册证号，并进入其购买及支持入口。', limit:'这是华为对自身产品的说明；页面报价并非实际成交价，也不能证明 L9 性能或 D2 销量。'},
