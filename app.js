@@ -13,7 +13,7 @@ const linkSource = id => {
 };
 const renderLookup = entry => {
   const source = sourceMap.get(entry.sourceId);
-  return source ? `<li><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(entry.title)} <span aria-hidden="true">↗</span></a><small>${escapeHTML(source.title)}</small><p>${escapeHTML(entry.purpose)}</p>${entry.query ? `<p class="lookup-query"><strong>检索词：</strong>${escapeHTML(entry.query)}</p>` : ''}</li>` : '';
+  return source ? `<li><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(entry.title)} <span aria-hidden="true">↗</span></a><small>${escapeHTML(source.title)}</small><p><strong>在这里查：</strong>${escapeHTML(entry.purpose)}</p>${entry.query ? `<p class="lookup-query"><strong>检索词：</strong>${escapeHTML(entry.query)}</p>` : ''}</li>` : '';
 };
 
 const list = document.getElementById('claim-list');
