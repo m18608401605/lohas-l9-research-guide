@@ -109,7 +109,7 @@ document.addEventListener('click', event => {
 });
 const copyTemplate = document.getElementById('copy-template');
 if (copyTemplate) copyTemplate.addEventListener('click', event => {
-  copyText('机会：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n相对价值：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n营销匹配：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n暂定判断【　】；首要行动【　】；前提与风险【　】；复核指标【　】。', event.currentTarget);
+  copyText('机会：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n相对价值：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n营销匹配：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n暂定判断【　】；首要行动【　】；资源与适用规则前提【　】；风险【　】；复核指标【　】。\n若证据不足而建议测试：待解命题【　】；对象与渠道【　】；观察周期【　】；主指标与阈值依据【　】；达标行动【　】；未达标行动【　】。', event.currentTarget);
 });
 const copyRecord = document.getElementById('copy-record');
 if (copyRecord) copyRecord.addEventListener('click', event => {
