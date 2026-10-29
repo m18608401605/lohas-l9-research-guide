@@ -15,10 +15,10 @@ const linkSource = id => {
 const list = document.getElementById('claim-list');
 if (list) {
   list.innerHTML = roundOne.map((item, index) => `
-    <a class="evidence-row" href="./task.html?id=${encodeURIComponent(item.id)}" data-priority="${escapeHTML(item.priority)}" data-search="${escapeHTML([item.title, item.concept, item.first, item.elements, item.can, item.cannot, item.decision, ...item.queries].join(' ').toLowerCase())}">
+    <a class="evidence-row" href="./task.html?id=${encodeURIComponent(item.id)}" data-priority="${escapeHTML(item.priority)}" data-search="${escapeHTML([item.title, item.concept, item.why, item.first, item.elements, item.can, item.cannot, item.decision, ...item.queries].join(' ').toLowerCase())}">
       <span class="evidence-summary">
-        <span class="table-cell question-cell"><small class="priority ${escapeHTML(item.priority)}">${item.priority === 'p0' ? '先做 P0' : '随后 P1'}</small><strong>${String(index + 1).padStart(2, '0')} · ${escapeHTML(item.title)}</strong></span>
-        <span class="table-cell collection-cell"><small>具体收集与口径</small>${escapeHTML(item.first)}<span class="record-elements"><b>记录：</b>${escapeHTML(item.elements)}</span></span>
+        <span class="table-cell question-cell"><small class="priority ${escapeHTML(item.priority)}">${item.priority === 'p0' ? '优先关注' : '按需补看'}</small><strong>${String(index + 1).padStart(2, '0')} · ${escapeHTML(item.title)}</strong></span>
+        <span class="table-cell collection-cell"><small>具体资料与口径</small>${escapeHTML(item.first)}<span class="record-elements"><b>核对口径：</b>${escapeHTML(item.elements)}</span></span>
         <span class="table-cell concept-cell"><small>对应知识点</small>${escapeHTML(item.concept)}</span>
         <span class="table-cell conclusion-cell"><small>能支持的结论</small>${escapeHTML(item.can)}</span>
         <span class="table-cell decision-cell"><small>决策与边界</small><strong>决策：</strong>${escapeHTML(item.decision)}<span class="decision-boundary"><strong>不能推断：</strong>${escapeHTML(item.cannot)}</span><b class="row-expand" aria-hidden="true">↗</b></span>
@@ -60,31 +60,25 @@ if (detail) {
   const index = roundOne.findIndex(item => item.id === id);
   const item = roundOne[index];
   if (!item) {
-    detail.innerHTML = '<div class="task-missing"><h1>没有找到这项任务</h1><p>请从第一轮证据清单选择任务。</p><a class="button small" href="./tasks.html">返回任务清单</a></div>';
+    detail.innerHTML = '<div class="task-missing"><h1>没有找到这个问题</h1><p>请从研究问题列表选择。</p><a class="button small" href="./tasks.html">返回研究问题</a></div>';
   } else {
     document.title = `${item.title}｜乐活元 L9 研究指南`;
     document.getElementById('task-breadcrumb-current').textContent = item.title;
     detail.innerHTML = `
-      <div class="task-detail-header"><span class="priority ${escapeHTML(item.priority)}">${item.priority === 'p0' ? '优先 P0' : '按需 P1'}</span><span class="task-number">任务 ${String(index + 1).padStart(2, '0')} / ${roundOne.length}</span><h1>${escapeHTML(item.title)}</h1><p>对应知识点：${escapeHTML(item.concept)}</p></div>
-      <div class="task-summary-grid">
-        <article><span>第一轮具体找</span><p>${escapeHTML(item.first)}</p><small><strong>记录口径：</strong>${escapeHTML(item.elements)}</small></article>
-        <article><span>能支持的结论</span><p>${escapeHTML(item.can)}</p></article>
-        <article><span>不能推断</span><p>${escapeHTML(item.cannot)}</p></article>
-        <article><span>影响的决策</span><p>${escapeHTML(item.decision)}</p></article>
-      </div>
-      <div class="task-detail-body"><div class="detail-lead"><span class="card-kicker">证据查找顺序</span><h2>先找关键证据，再决定是否补证</h2><p>一般证据用于解释和核对；只有满足触发条件时才使用替代资料，并收窄报告结论。</p></div>
+      <div class="task-detail-header"><span class="priority ${escapeHTML(item.priority)}">${item.priority === 'p0' ? '优先关注' : '按需补看'}</span><span class="task-number">问题 ${String(index + 1).padStart(2, '0')} / ${roundOne.length}</span><h1>${escapeHTML(item.title)}</h1><p>对应知识点：${escapeHTML(item.concept)}</p></div>
+      <div class="task-why"><strong>为什么看这个问题</strong><p>${escapeHTML(item.why)}</p></div>
+      <div class="task-detail-body"><div class="detail-lead"><span class="card-kicker">01 / 查找资料</span><h2>先找能直接检验问题的证据</h2><p>一般资料用来解释与核对；关键证据不足时再查看替代路径。</p></div>
         <div class="detail-grid">
-          <div class="detail-block key"><span>01 / 关键证据</span><p>${escapeHTML(item.key)}</p></div>
-          <div class="detail-block"><span>02 / 一般支撑证据</span><p>${escapeHTML(item.general)}</p></div>
-          <div class="detail-block trigger"><span>03 / 替代证据触发条件</span><p>${escapeHTML(item.trigger)}</p></div>
-          <div class="detail-block fallback"><span>04 / 替代资料顺序</span><ol>${item.fallback.map(value => `<li>${escapeHTML(value)}</li>`).join('')}</ol></div>
+          <div class="detail-block key"><span>优先找什么</span><p>${escapeHTML(item.first)}</p><p class="detail-secondary"><strong>关键证据：</strong>${escapeHTML(item.key)}</p><small><strong>核对口径：</strong>${escapeHTML(item.elements)}</small></div>
+          <div class="detail-block"><span>一般资料有什么作用</span><p>${escapeHTML(item.general)}</p></div>
         </div>
-        <div class="detail-counter"><strong>主动寻找相反解释</strong><p>${escapeHTML(item.counter)}</p></div>
-        <div class="research-actions"><div><span class="small-label">可回查的资料入口</span><div class="source-links">${item.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">点击复制检索词</span><div class="query-list">${item.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>
-        <p class="detail-deliverable"><strong>本项交付：</strong>${escapeHTML(item.deliverable)}</p>
+        <div class="research-actions"><div><span class="small-label">从这些来源开始</span><div class="source-links">${item.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">点击复制检索词</span><div class="query-list">${item.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>
+        <details class="task-fallback"><summary>关键证据不足时，再看替代资料 <span aria-hidden="true">＋</span></summary><div><p><strong>什么时候需要：</strong>${escapeHTML(item.trigger)}</p><ol>${item.fallback.map(value => `<li>${escapeHTML(value)}</li>`).join('')}</ol><p>使用替代资料时，结论须限制在它实际覆盖的型号、人群、地域和指标范围内。</p></div></details>
+        <div class="task-interpretation"><div class="detail-lead"><span class="card-kicker">02 / 解释资料</span><h2>把资料连到知识点和决策</h2></div><div class="concept-bridge"><strong>知识点怎样用</strong><p>${escapeHTML(item.conceptUse)}</p></div><div class="meaning-grid"><article><strong>这些资料可以支持</strong><p>${escapeHTML(item.can)}</p></article><article><strong>不能据此推断</strong><p>${escapeHTML(item.cannot)}</p></article></div><div class="detail-counter"><strong>还要考虑的解释</strong><p>${escapeHTML(item.counter)}</p></div><div class="decision-clue"><strong>可能影响的决策</strong><p>${escapeHTML(item.decision)}</p></div></div>
+        <div class="discussion-prompt"><span class="card-kicker">交给小组讨论</span><p>${escapeHTML(item.discussion)}</p></div>
       </div>`;
     const neighbors = document.getElementById('task-neighbors');
-    neighbors.innerHTML = `<a href="./tasks.html">← 返回全部任务</a>${index > 0 ? `<a href="./task.html?id=${encodeURIComponent(roundOne[index - 1].id)}">← 上一项：${escapeHTML(roundOne[index - 1].title)}</a>` : ''}${index < roundOne.length - 1 ? `<a href="./task.html?id=${encodeURIComponent(roundOne[index + 1].id)}">下一项：${escapeHTML(roundOne[index + 1].title)} →</a>` : ''}`;
+    neighbors.innerHTML = `<a href="./tasks.html">← 返回全部问题</a>${index > 0 ? `<a href="./task.html?id=${encodeURIComponent(roundOne[index - 1].id)}">← 上一题：${escapeHTML(roundOne[index - 1].title)}</a>` : ''}${index < roundOne.length - 1 ? `<a href="./task.html?id=${encodeURIComponent(roundOne[index + 1].id)}">下一题：${escapeHTML(roundOne[index + 1].title)} →</a>` : ''}`;
   }
 }
 
@@ -106,12 +100,4 @@ async function copyText(value, button) {
 document.addEventListener('click', event => {
   const button = event.target.closest('[data-copy]');
   if (button) copyText(button.dataset.copy, button);
-});
-const copyTemplate = document.getElementById('copy-template');
-if (copyTemplate) copyTemplate.addEventListener('click', event => {
-  copyText('机会：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n相对价值：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n营销匹配：证据及口径【　】／反证【　】／状态【支持·相反·不足】\n暂定判断【　】；首要行动【　】；资源与适用规则前提【　】；风险【　】；复核指标【　】。\n若证据不足而建议测试：待解命题【　】；对象与渠道【　】；观察周期【　】；主指标与阈值依据【　】；达标行动【　】；未达标行动【　】。', event.currentTarget);
-});
-const copyRecord = document.getElementById('copy-record');
-if (copyRecord) copyRecord.addEventListener('click', event => {
-  copyText('任务编号｜原始链接｜发布者与发布日期｜统计期间｜地域与型号／人群｜指标定义｜原文位置｜资料事实｜能支持什么｜不能证明什么｜相反解释｜影响哪项决策', event.currentTarget);
 });
