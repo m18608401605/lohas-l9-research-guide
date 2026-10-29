@@ -2,6 +2,11 @@ const guide = window.L9_GUIDE;
 const roundOne = window.L9_FIRST_ROUND;
 const sourceMap = new Map(guide.sources.map(source => [source.id, source]));
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+if (document.body?.classList.contains('page-home')) {
+  const oldLinks = {'#claims': './tasks.html', '#sources': './sources.html', '#decision': './decision.html', '#finish': './decision.html#finish'};
+  const destination = oldLinks[window.location.hash];
+  if (destination) window.location.replace(destination);
+}
 const linkSource = id => {
   const source = sourceMap.get(id);
   return source ? `<div class="task-source"><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)} <span aria-hidden="true">↗</span></a><small><strong>使用边界：</strong>${escapeHTML(source.limit)}</small></div>` : '';
