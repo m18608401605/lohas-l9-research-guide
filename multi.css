@@ -39,6 +39,9 @@
 .concept-bridge{background:#e8ede6;border-left:3px solid #658e79;padding:1rem 1.2rem;margin-bottom:.75rem}
 .concept-bridge strong,.decision-clue strong{font-size:.76rem;color:#315e52}
 .concept-bridge p,.decision-clue p{font-size:.82rem;margin:.4rem 0 0}
+.concept-example{background:#f6f0e4;border-left:3px solid #ba9a62;padding:1rem 1.2rem;margin-bottom:.75rem}
+.concept-example strong{font-size:.76rem;color:#87663e}
+.concept-example p{font-size:.82rem;margin:.4rem 0 0}
 .meaning-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
 .meaning-grid article{background:#fffefa;border:1px solid var(--line);padding:1.2rem}
 .meaning-grid article:last-child{border-top:3px solid #a66b52}
