@@ -23,6 +23,16 @@
 .task-detail-body .detail-lead h2{font-family:"Songti SC",Georgia,serif;font-size:1.7rem;margin:.5rem 0}
 .task-detail-body .detail-lead p{font-size:.84rem}
 .task-detail-body .research-actions{padding:1.5rem 0}
+.lookup-path{margin:1.2rem 0;padding:1.2rem;background:#fffefa;border:1px solid var(--line)}
+.lookup-path .small-label{margin-bottom:.8rem}
+.lookup-path ol{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+.lookup-path li{padding:1rem;background:#edf2ec;border:1px solid #d8e4da}
+.lookup-path a{font-size:.85rem;font-weight:800;color:#315e52;text-decoration:none}
+.lookup-path a:hover{text-decoration:underline}
+.lookup-path small{display:block;font-size:.69rem;color:#68726f;margin:.25rem 0 .5rem}
+.lookup-path li p{font-size:.78rem;margin:.35rem 0 0}
+.lookup-path .lookup-query{padding-top:.5rem;border-top:1px solid #d5e1d7;overflow-wrap:anywhere}
+.lookup-path .lookup-note{font-size:.8rem;margin:1rem 0 0;padding:.9rem 1rem;background:#f4eadc;color:#624f38}
 .detail-block.key .detail-secondary{margin-top:.8rem;padding-top:.65rem;border-top:1px solid #c4dacf}
 .detail-block.key small{display:block;margin-top:.65rem;color:#4b6a60;font-size:.75rem;line-height:1.65}
 .task-fallback{margin:1rem 0 2.2rem;background:#f1e8da;border:1px solid #d9c8af}
@@ -91,6 +101,7 @@
 }
 @media(max-width:760px){
   .meaning-grid,.readiness-list{grid-template-columns:1fr}
+  .lookup-path ol{grid-template-columns:1fr}
   .task-why{padding:1rem 1.2rem}
   .task-detail-body{padding:1rem}
   .task-neighbors{flex-direction:column}

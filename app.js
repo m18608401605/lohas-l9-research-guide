@@ -9,7 +9,11 @@ if (document.body?.classList.contains('page-home')) {
 }
 const linkSource = id => {
   const source = sourceMap.get(id);
-  return source ? `<div class="task-source"><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)} <span aria-hidden="true">↗</span></a><small><strong>使用边界：</strong>${escapeHTML(source.limit)}</small></div>` : '';
+  return source ? `<div class="task-source"><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)} <span aria-hidden="true">↗</span></a><small>${escapeHTML(source.summary)}</small><small><strong>使用边界：</strong>${escapeHTML(source.limit)}</small></div>` : '';
+};
+const renderLookup = entry => {
+  const source = sourceMap.get(entry.sourceId);
+  return source ? `<li><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(entry.title)} <span aria-hidden="true">↗</span></a><small>${escapeHTML(source.title)}</small><p>${escapeHTML(entry.purpose)}</p>${entry.query ? `<p class="lookup-query"><strong>检索词：</strong>${escapeHTML(entry.query)}</p>` : ''}</li>` : '';
 };
 
 const list = document.getElementById('claim-list');
@@ -72,7 +76,7 @@ if (detail) {
           <div class="detail-block key"><span>优先找什么</span><p>${escapeHTML(item.first)}</p><p class="detail-secondary"><strong>关键证据：</strong>${escapeHTML(item.key)}</p><small><strong>核对口径：</strong>${escapeHTML(item.elements)}</small></div>
           <div class="detail-block"><span>其他资料的用途</span><p>${escapeHTML(item.general)}</p></div>
         </div>
-        <div class="research-actions"><div><span class="small-label">从这些来源开始</span><div class="source-links">${item.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">点击复制检索词</span><div class="query-list">${item.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>
+        ${item.lookup ? `<div class="lookup-path"><span class="small-label">具体去哪里找（按顺序）</span><ol>${item.lookup.map(renderLookup).join('')}</ol>${item.lookupNote ? `<p class="lookup-note">${escapeHTML(item.lookupNote)}</p>` : ''}</div>` : `<div class="research-actions"><div><span class="small-label">从这些来源开始</span><div class="source-links">${item.sourceIds.map(linkSource).join('')}</div></div><div><span class="small-label">点击复制检索词</span><div class="query-list">${item.queries.map(query => `<button type="button" class="query" data-copy="${escapeHTML(query)}" title="点击复制检索词">${escapeHTML(query)} <span aria-hidden="true">⧉</span></button>`).join('')}</div></div></div>`}
         <details class="task-fallback"><summary>缺少直接证据时，怎样继续查？ <span aria-hidden="true">＋</span></summary><div><p><strong>出现什么缺口时：</strong>${escapeHTML(item.trigger)}</p><ol>${item.fallback.map(value => `<li>${escapeHTML(value)}</li>`).join('')}</ol><p>补查线索只能支持它实际覆盖的型号、人群、地域、时期和指标；仍缺失的内容要明确写为待核。</p></div></details>
         <div class="task-interpretation"><div class="detail-lead"><span class="card-kicker">02 / 解释资料</span><h2>查到资料后，怎么形成判断？</h2></div><div class="concept-bridge"><strong>用课程知识检查什么</strong><p>${escapeHTML(item.conceptUse)}</p></div>${item.example ? `<div class="concept-example"><strong>举例（假设，并非 L9 已发生的情况）</strong><p>${escapeHTML(item.example)}</p></div>` : ''}<div class="meaning-grid"><article><strong>查到后可以说什么</strong><p>${escapeHTML(item.can)}</p></article><article><strong>还不能说什么</strong><p>${escapeHTML(item.cannot)}</p></article></div><div class="detail-counter"><strong>还有什么可能的解释</strong><p>${escapeHTML(item.counter)}</p></div><div class="decision-clue"><strong>这会怎样影响建议</strong><p>${escapeHTML(item.decision)}</p></div></div>
         <div class="discussion-prompt"><span class="card-kicker">小组讨论一个问题</span><p>${escapeHTML(item.discussion)}</p></div>
